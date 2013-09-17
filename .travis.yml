@@ -1,0 +1,11 @@
+language: perl
+perl:
+  - "5.18"
+  - "5.14"
+
+install:
+    - "cpanm -v --installdeps --notest --mirror http://cpan.mirrors.travis-ci.org ./" 
+
+script:
+	- "xt_travis_ci/setup.sh"
+	- "perl Makefile.PL && make test"
