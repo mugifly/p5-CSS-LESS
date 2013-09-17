@@ -74,4 +74,3 @@
 
 # Others
 ^\.travis\.yml
-\bxt\_travis\_ci\/

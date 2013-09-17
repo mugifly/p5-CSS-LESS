@@ -6,4 +6,8 @@ perl:
 install:
     - "cpanm -v --installdeps --notest --mirror http://cpan.mirrors.travis-ci.org ./" 
 
-script: "xt_travis_ci/setup.sh && perl Makefile.PL && make test"
+before_install:
+    - "sudo apt-get install -qq node-0.10"
+    - "sudo npm install -g less"
+
+script: "perl Makefile.PL && make test"
