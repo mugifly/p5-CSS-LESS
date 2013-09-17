@@ -1,0 +1,75 @@
+=head1 NAME
+
+CSS::Less - Compile LESS stylesheet files (.less) using lessc
+
+=head1 SYNOPSIS
+
+  use CSS::Less;
+  # Compile a single LESS stylesheet
+  my $less = CSS::Less->new();
+  my $css = $less->compile('a:link { color: lighten('#000000', 10%); }');
+  print $css."\n";
+
+  # Compile a LESS stylesheets with using @include syntax of LESS.
+  $less = CSS::Less->new( include_paths => ['/foo/include/'] );
+  $css = $less->compile('@import (less) 'bar.less'; div { width: 100px; }');
+  print $css."\n";
+
+=head1 REQUIREMENTS
+
+=head2 lessc
+
+It must installed, because this module is wrapper of "lessc".
+
+You can install "lessc" using "npm" (Node.js Package Manager).
+
+    $ npm install -g less
+    $ lessc -v
+    lessc x.x.x (LESS Compiler) [JavaScript]
+
+=head1 METHODS
+
+=head2 new ( [%params] )
+
+Create an instance of CSS::Less.
+
+=head3 %params : 
+
+=over 4
+
+=item * include_paths - Path of include .less files. 
+
+This paths will be used for the @include syntax of .less stylesheet.
+
+Note: If you set a extrinsic variable value to it, you must be careful. (It means such as set a value by user-input on the Web-application. Because it has matter of concern that like a directory-traversal ).
+
+=item * lessc_path - Path of LESS compiler (default: 'lessc' on the PATH.)
+
+=item * dry_run - Dry-run mode for debug. (default: 0)
+
+=item * dont_die - (default: 0)
+
+=item * tmp_path - Path of save for temporally files.
+
+=back
+
+=head2 compile ( $content )
+
+Parse a LESS (.less) stylesheet, and compile to CSS (.css) stylesheet.
+
+If you would prefer to compile from a file, firstly, please read a file with using the "File::Slurp" module or open method as simply. Then, parse it with this 'compile' method.
+
+=head2 is_lessc_installed ( )
+
+Check for lessc has installed.
+
+=head1 SEE ALSO
+
+L<http://lesscss.org/>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2013, Masanori Ohgita (http://ohgita.info/).
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
