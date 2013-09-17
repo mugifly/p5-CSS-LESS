@@ -1,4 +1,4 @@
-package CSS::Less;
+package CSS::LESS;
 
 use warnings;
 use strict;
@@ -143,21 +143,20 @@ sub _generate_cmd_lessc {
 }
 
 1;
-__END__
-=head1 NAME
+__END__=head1 NAME
 
-CSS::Less - Compile LESS stylesheet files (.less) using lessc
+CSS::LESS - Compile LESS stylesheet files (.less) using lessc
 
 =head1 SYNOPSIS
 
-  use CSS::Less;
+  use CSS::LESS;
   # Compile a single LESS stylesheet
-  my $less = CSS::Less->new();
+  my $less = CSS::LESS->new();
   my $css = $less->compile('a:link { color: lighten('#000000', 10%); }');
   print $css."\n";
 
   # Compile a LESS stylesheets with using @include syntax of LESS.
-  $less = CSS::Less->new( include_paths => ['/foo/include/'] );
+  $less = CSS::LESS->new( include_paths => ['/foo/include/'] );
   $css = $less->compile('@import (less) 'bar.less'; div { width: 100px; }');
   print $css."\n";
 
@@ -177,7 +176,7 @@ You can install "lessc" using "npm" (Node.js Package Manager).
 
 =head2 new ( [%params] )
 
-Create an instance of CSS::Less.
+Create an instance of CSS::LESS.
 
 =head3 %params : 
 
@@ -208,6 +207,10 @@ If you would prefer to compile from a file, firstly, please read a file with usi
 =head2 is_lessc_installed ( )
 
 Check for lessc has installed.
+
+=head2 last_error ()
+
+Get a message of last error. (This method is useful only if 'dont_die' option is set when initialized an instance.)
 
 =head1 SEE ALSO
 

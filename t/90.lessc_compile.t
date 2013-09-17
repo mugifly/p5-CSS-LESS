@@ -2,11 +2,11 @@ use Test::More;
 use strict;
 use warnings;
 
-use CSS::Less;
+use CSS::LESS;
 use File::Slurp;
 use FindBin;
 
-my $less = CSS::Less->new( include_paths => [ $FindBin::Bin.'/data/', $FindBin::Bin.'/data_sub/' ], );
+my $less = CSS::LESS->new( include_paths => [ $FindBin::Bin.'/data/', $FindBin::Bin.'/data_sub/' ], );
 unless ( $less->is_lessc_installed() ){
 	plan(skip_all => 'Not installed lessc');
 }

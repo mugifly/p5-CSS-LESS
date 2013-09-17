@@ -1,7 +1,7 @@
 use Test::More tests => 1;
 
 BEGIN {
-use_ok( 'CSS::Less' );
+use_ok( 'CSS::LESS' );
 }
 
-diag( "Testing CSS::Less $CSS::Less::VERSION" );
+diag( "Testing CSS::LESS $CSS::LESS::VERSION" );

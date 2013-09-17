@@ -2,11 +2,11 @@ use Test::More;
 use strict;
 use warnings;
 
-use CSS::Less;
+use CSS::LESS;
 use File::Slurp;
 use FindBin;
 
-my $less = CSS::Less->new(
+my $less = CSS::LESS->new(
 	include_paths => [ $FindBin::Bin.'/foo/', '/bar/' ],
 	dry_run => 1,
 );
