@@ -74,3 +74,4 @@
 
 # Others
 ^\.travis\.yml
+^readme\.html
