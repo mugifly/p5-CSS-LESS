@@ -147,6 +147,10 @@ __END__=head1 NAME
 
 CSS::LESS - Compile LESS stylesheet files (.less) using lessc
 
+=head1 NAME
+
+CSS::LESS - Compile LESS stylesheet files (.less) using lessc
+
 =head1 SYNOPSIS
 
   use CSS::LESS;
@@ -182,19 +186,48 @@ Create an instance of CSS::LESS.
 
 =over 4
 
-=item * include_paths - Path of include .less files. 
+=item C<include_paths>
+
+Path of include .less files. 
 
 This paths will be used for the @include syntax of .less stylesheet.
 
-Note: If you set a extrinsic variable value to it, you must be careful. (It means such as set a value by user-input on the Web-application. Because it has matter of concern that like a directory-traversal ).
+Use case of example:
 
-=item * lessc_path - Path of LESS compiler (default: 'lessc' on the PATH.)
+  # File-A of LESS stylesheet
+  # This file will be set as content when calling a 'compile' method.
+  @include (less) 'foo.less';
+  ~~~~
 
-=item * dry_run - Dry-run mode for debug. (default: 0)
+  # File-B of LESS stylesheet
+  # This file was already saved to: /var/www/include/foo.less
+  div {
+    width: (100+200)px;
+  }
+  ~~~~
 
-=item * dont_die - (default: 0)
+  # Example of script
+  my less = CSS::LESS->new( include_paths => [ '/var/www/include/' ] )
+  my $css = $less->compile( File-A ); # Let compile the File-A.
+  print $css."\n"; # It includes the File-B, and will be compiled.
 
-=item * tmp_path - Path of save for temporally files.
+Note: However, if you set a extrinsic variable value to it, you must be careful. (It means such as set a value by user-input on the Web-application. Because it has matter of concern that like a directory-traversal.)
+
+=item C<lessc_path>
+
+Path of LESS compiler (default: 'lessc' on the PATH.)
+
+=item C<dry_run>
+
+Dry-run mode for debug. (default: 0)
+
+=item C<dont_die>
+
+When an errors accrued, don't die. (default: 0)
+
+=item C<tmp_path>
+
+Path of save for temporally files. (default: '/tmp/'' or other temporally directory.)
 
 =back
 
@@ -214,7 +247,9 @@ Get a message of last error. (This method is useful only if 'dont_die' option is
 
 =head1 SEE ALSO
 
-L<http://lesscss.org/>
+L<https://github.com/mugifly/p5-CSS-LESS>
+
+L<CSS::Sass>
 
 =head1 COPYRIGHT AND LICENSE
 
