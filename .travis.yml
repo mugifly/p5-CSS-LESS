@@ -8,6 +8,6 @@ install:
 
 before_install:
     - "sudo apt-get install -qq node"
-    - "sudo npm install -g less"
+    - "sudo $(which npm) install -g less"
 
 script: "perl Makefile.PL && make test"
