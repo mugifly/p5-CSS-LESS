@@ -7,7 +7,7 @@ install:
     - "cpanm -v --installdeps --notest --mirror http://cpan.mirrors.travis-ci.org ./" 
 
 before_install:
-    - "sudo apt-get install -qq node-0.10"
+    - "sudo apt-get install -qq node"
     - "sudo npm install -g less"
 
 script: "perl Makefile.PL && make test"
