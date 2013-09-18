@@ -106,7 +106,9 @@ Get a message of last error. (This method is useful only if 'dont_die' option is
 
 =head1 SEE ALSO
 
-L<https://github.com/mugifly/p5-CSS-LESS> - Your feedback is highly appreciated.
+L<https://github.com/mugifly/p5-CSS-LESS> - Develop on GitHub. Your feedback is highly appreciated.
+
+L<CSS::LESSp> - LESS-parser by native perl implementation.
 
 L<CSS::Sass>
 
