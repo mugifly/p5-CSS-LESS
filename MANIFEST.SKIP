@@ -71,6 +71,7 @@
 
 # Avoid archives of this distribution
 \bCSS-LESS-[\d\.\_]+
+\bCSS-LESS-v[\d\.\_]+
 
 # Others
 ^\.travis\.yml

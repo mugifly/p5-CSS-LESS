@@ -6,17 +6,37 @@ use Carp;
 use File::Temp qw//;
 use IPC::Open3;
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
+
+our @LESSC_PARAMS = qw/ include_paths compress strict_imports
+ relative_urls rootpath line_numbers version /;
+our %DEFAULT_PARAMS = (
+	# Parameters for module
+	dont_die		 	=> 0,
+	dry_run		 	=> 0,
+	path_lessc_bin	=> 'lessc',
+	path_tmp			=> undef,
+	# Parameters for lessc
+	include_paths	=> undef,	# Array
+	compress		=> 'false',	# Bool
+	strict_imports	=> 'false',	# Bool
+	relative_urls	=> 'false',	# Bool
+	rootpath		=> undef,	# String (URL)
+	line_numbers		=> undef,	# String ('comments', 'mediaquery', 'both', or undef)
+);
 
 sub new {
 	my ($class, %params) = @_;
 	my $s = bless({}, $class);
 
-	$s->{dont_die} = $params{dont_die} || 0;
-	$s->{dry_run} = $params{dry_run};
-	$s->{paths_include} = $params{include_paths}; # Array
-	$s->{path_lessc_bin} = $params{lessc_path} || 'lessc';
-	$s->{path_tmp} = $params{tmp_path} || undef;
+	# Proceess for parameters of constructor
+	foreach ( keys %DEFAULT_PARAMS ) {
+		if(defined $params{$_}){
+			$s->{$_} = $params{$_};
+		} else {
+			$s->{$_} = $DEFAULT_PARAMS{$_};
+		}
+	}
 
 	$s->{last_error} = undef;
 
@@ -25,10 +45,22 @@ sub new {
 
 # Ccompile a less style-sheet (return: Compiled CSS style-sheet)
 sub compile {
-	my $s = shift;
-	my $buf = shift;
+	my ($s, $buf, %params) = @_;
+
+	unless (%params) {
+		%params = ();
+	}
+
+	# Process for parameters (Set property in instance)
+	foreach ( keys %DEFAULT_PARAMS ) {
+		if(!defined $params{$_} && defined $s->{$_}){ # Not defined on params AND defined on member of $self
+			$params{$_} = $s->{$_};
+		}
+	}
+	$params{content} = $buf;
+
 	# Compile less to css
-	return $s->_exec_lessc('content' => $buf);
+	return $s->_exec_lessc(%params);
 }
 
 # Get last error
@@ -40,7 +72,7 @@ sub last_error {
 # Check for lessc has installed
 sub is_lessc_installed {
 	my $s = shift;
-	my $lessc_ver = $s->_exec_lessc('version' => undef);
+	my $lessc_ver = $s->_exec_lessc(version => undef);
 	if($lessc_ver =~ /^lessc .*(LESS Compiler).*/i) {
 		return 1;
 	}
@@ -113,31 +145,38 @@ sub _generate_cmd_lessc {
 	}
 
 	# Process for include paths
-	if(defined $s->{paths_include}){
-		if(@{$s->{paths_include}} <= 1){
-			push(@cmd_args, '--include-path='.$s->{paths_include}->[0]);
+	if(defined $options{include_paths}){
+		if(@{$options{include_paths}} <= 1){
+			push(@cmd_args, '--include-path='.$options{include_paths}->[0]);
 		} else {
 			my $paths = '--include-path=';
 			{
 				local $" = ':';
-				$paths .= "@{$s->{paths_include}}";
+				$paths .= "@{$options{include_paths}}";
 			}
 			$paths .= '';
 			push(@cmd_args, $paths);
 		}
+		delete $options{include_paths};
 	}
 
 	# Process for other parameters
-	foreach my $key (keys %options) {
-		if(defined $options{$key}){
-			push(@cmd_args, "--".$key."=".$options{$key});
-		} else {
-			push(@cmd_args, "--".$key);
+	foreach my $key (@LESSC_PARAMS) {
+		if(defined $options{$key} && (!defined $DEFAULT_PARAMS{$key} || $DEFAULT_PARAMS{$key} ne 'false')) {
+			my $arg_name = $key;
+			$arg_name =~ s/\_/\-/g;
+			push(@cmd_args, "--".$arg_name."=".$options{$key});
+		} elsif(defined $options{$key} && ($options{$key} eq 'false' || $options{$key} == '0') && $DEFAULT_PARAMS{$key} eq 'false') {
+			# Do not anything	
+		} elsif(exists $options{$key}){
+			my $arg_name = $key;
+			$arg_name =~ s/\_/\-/g;
+			push(@cmd_args, "--".$arg_name);
 		}
 	}
 
 	push(@cmd_args, '--verbose');
-	
+	push(@cmd_args, '--no-color');
 	# Return a args (with command path) and a path of temp-file
 	return (\@cmd_args, $path_tmpfile);
 }
