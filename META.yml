@@ -15,7 +15,7 @@ name: CSS-LESS
 provides:
   CSS::LESS:
     file: lib/CSS/LESS.pm
-    version: v0.0.1
+    version: v0.0.2
 requires:
   File::Slurp: 0
   File::Temp: 0
@@ -25,4 +25,4 @@ requires:
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: v0.0.1
+version: v0.0.2
