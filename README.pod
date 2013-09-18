@@ -15,6 +15,9 @@ CSS::LESS - Compile LESS stylesheet files (.less) using lessc
   $css = $less->compile('@import (less) 'bar.less'; div { width: 100px; }');
   print $css."\n";
 
+This module has just launched development yet.
+Your feedback is very appreciated.
+
 =head1 REQUIREMENTS
 
 =head2 lessc
@@ -26,6 +29,10 @@ You can install "lessc" using "npm" (Node.js Package Manager).
     $ npm install -g less
     $ lessc -v
     lessc x.x.x (LESS Compiler) [JavaScript]
+
+=head1 INSTALLATION (from GitHub)
+  $ git clone git://github.com/mugifly/p5-CSS-LESS.git
+  $ cpanm ./p5-CSS-LESS
 
 =head1 METHODS
 
@@ -62,7 +69,7 @@ Use case of example:
   my $css = $less->compile( File-A ); # Let compile the File-A.
   print $css."\n"; # It includes the File-B, and will be compiled.
 
-Note: However, if you set a extrinsic variable value to it, you must be careful. (It means such as set a value by user-input on the Web-application. Because it has matter of concern that like a directory-traversal.)
+Note: This module has released as alpha version.
 
 =item C<lessc_path>
 
@@ -98,7 +105,7 @@ Get a message of last error. (This method is useful only if 'dont_die' option is
 
 =head1 SEE ALSO
 
-L<https://github.com/mugifly/p5-CSS-LESS>
+L<https://github.com/mugifly/p5-CSS-LESS> - Your feedback is highly appreciated.
 
 L<CSS::Sass>
 
