@@ -31,6 +31,7 @@ You can install "lessc" using "npm" (Node.js Package Manager).
     lessc x.x.x (LESS Compiler) [JavaScript]
 
 =head1 INSTALLATION (from GitHub)
+
   $ git clone git://github.com/mugifly/p5-CSS-LESS.git
   $ cpanm ./p5-CSS-LESS
 
