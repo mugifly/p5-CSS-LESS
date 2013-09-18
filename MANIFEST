@@ -17,3 +17,5 @@ t/data_sub/90_test_part-import-sub.less
 xt/perlcritic.t
 xt/pod-coverage.t
 xt/pod.t
+META.yml
+META.json
