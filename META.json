@@ -33,7 +33,7 @@
    "provides" : {
       "CSS::LESS" : {
          "file" : "lib/CSS/LESS.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       }
    },
    "release_status" : "stable",
@@ -42,5 +42,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "v0.0.2"
+   "version" : "v0.0.3"
 }

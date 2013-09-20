@@ -11,6 +11,7 @@ t/00.load.t
 t/10.dry-run.t
 t/90.lessc_compile.t
 t/91.lessc_compile_error.t
+t/92.lessc_not-installed.t
 t/data/90_error.less
 t/data/90_test.css
 t/data/90_test.less
