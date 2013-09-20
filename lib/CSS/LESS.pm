@@ -6,7 +6,7 @@ use Carp;
 use File::Temp qw//;
 use IPC::Open3;
 
-use version; our $VERSION = qv('0.0.2');
+use version; our $VERSION = qv('0.0.3');
 
 our @LESSC_PARAMS = qw/ include_paths compress strict_imports
  relative_urls rootpath line_numbers version /;
@@ -39,6 +39,7 @@ sub new {
 	}
 
 	$s->{last_error} = undef;
+	$s->{is_lessc_installed} = undef;
 
 	return $s;
 }
@@ -46,6 +47,12 @@ sub new {
 # Ccompile a less style-sheet (return: Compiled CSS style-sheet)
 sub compile {
 	my ($s, $buf, %params) = @_;
+
+	unless (defined $s->{is_lessc_installed} ) {
+		if($s->is_lessc_installed() == 0 && $s->{dont_die} == 0) {
+			die('lessc is not installed');
+		}
+	}
 
 	unless (%params) {
 		%params = ();
@@ -72,8 +79,17 @@ sub last_error {
 # Check for lessc has installed
 sub is_lessc_installed {
 	my $s = shift;
-	my $lessc_ver = $s->_exec_lessc(version => undef);
-	if($lessc_ver =~ /^lessc .*(LESS Compiler).*/i) {
+
+	if($s->{dry_run}){ # Dry run
+		return 1;
+	}
+
+	my $lessc_ver;
+	eval {
+		$lessc_ver = $s->_exec_lessc(version => undef);
+	}; if($@) { return 0; }
+	if(defined $lessc_ver && $lessc_ver =~ /^lessc .*(LESS Compiler).*/i) {
+		$s->{is_lessc_installed} = 1;
 		return 1;
 	}
 	return 0;
