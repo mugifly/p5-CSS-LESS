@@ -352,6 +352,10 @@ L<CSS::LESSp> - LESS-parser by native perl implementation.
 
 L<CSS::Sass>
 
+=head1 CONTRIBUTORS
+
+See CONTRIBUTORS file.
+
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (C) 2013, Masanori Ohgita (http://ohgita.info/).

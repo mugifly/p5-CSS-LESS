@@ -1,5 +1,10 @@
 Revision history for CSS-LESS
 
+0.0.4  Tue Nov 26 01:10:00 2013 JST
+    * [Fix] Switched to IPC::Run instead of Open3 (Support for mod_perl)
+    		(Thanks to: Rolf Schaufelberger).
+    * [Fix] Document and test (Thanks to: Rolf Schaufelberger).
+
 0.0.3  Fri Sep 20 16:30:00 2013 JST
 	* [Fix] Test on lessc not installed environment and error prosessing. (I'm very sorry.)
 

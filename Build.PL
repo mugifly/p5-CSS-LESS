@@ -15,6 +15,7 @@ my $builder = Module::Build->new(
         'File::Slurp'	 => 0,
         'File::Temp'	 => 0,
         'FindBin'		 => 0,
+        'IPC::Run'	 => 0,
     },
     add_to_cleanup      => [ 'CSS-LESS-*' ],
 );
