@@ -129,7 +129,9 @@ sub _exec_lessc {
 				die ('Compile error: Unknown');
 			}
 		}
+		return "";
 	}
+
 	# Delete tmp file
 	if(defined $path_tmpfile){
 		unlink($path_tmpfile);
